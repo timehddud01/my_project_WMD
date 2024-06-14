@@ -1,0 +1,335 @@
+@use 'sass:list';
+
+@import 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap';
+
+$bgcolors: #e30512, #1d3fbb, #ffbe00, #ff651a, #00c1b5, #fff, #fd5f8d;
+
+:root {
+  --fixed-m-x: 0.9375rem; // 변수 설정-- 값을 한번에 조절할 수 있다.
+  --fixed-m-y: 1.25rem;
+  --logo-h: 1.875rem;
+  --logo-h-md: 1rem;
+}
+
+$bp-lg: 62.5rem;
+$bp-md: 47.5rem;
+$bp-sm: 35rem;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; // 스크롤을 부드럽게 해줌
+  scroll-snap-type: y mandatory; // 스크롤 시 스냅(어디를 기준으로 할지)(y또는 x, mandatory 또는...) - 스크롤이 적용되는 .issue로 가서 snap align  ~ center로 맞춰준다(start도 설정가능 )
+  @media (width< $bp-lg) {
+    scroll-snap-type: none;
+  }
+} // 꼭 boby위에 써줘야한다.위에 써줘야 하는 것이 바로 html이다.
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.5625rem;
+  background-color: list.nth($bgcolors, 7);
+  animation-name: bg-change; // 애니메이션 이름은 직접 설정
+  animation-timeline: scroll();
+  @media (width< $bp-lg) {
+    animation-name: bg-change-margin;
+  }
+}
+
+@keyframes bg-change {
+  @for $i from 0 through 5 {
+    #{100/6*$i}#{'%'},
+    #{100/6*$i + 100 / 12}#{'%'} {
+      background-color: list.nth($bgcolors, 7-$i);
+    }
+  }
+
+  100% {
+    background-color: list.nth($bgcolors, 1); // 변할 요소
+  }
+
+  // 0%,
+  // #{calc(100/6*0.5)}#{'%'} {
+  //   background-color: list.nth($bgcolors, 7); //변할 요소
+  // }
+
+  // #{calc(100/6*1)}#{'%'} {
+  //   background-color: list.nth($bgcolors, 6);
+  // }
+
+  // #{calc(100/6*2)}#{'%'} {
+  //   background-color: list.nth($bgcolors, 5); //변할 요소
+  // }
+
+  // #{calc(100/6*3)}#{'%'} {
+  //   background-color: list.nth($bgcolors, 4);
+  // }
+
+  // #{calc(100/6*4)}#{'%'} {
+  //   background-color: list.nth($bgcolors, 3); //변할 요소
+  // }
+
+  // #{calc(100/6*5)}#{'%'} {
+  //   background-color: list.nth($bgcolors, 2);
+  // }
+}
+
+@keyframes bg-change-margin {
+  @for $i from 0 through 5 {
+    #{100/6*$i}#{'%'},
+    #{100/6*$i + 100 / 12}#{'%'} {
+      background-color: list.nth($bgcolors, 7-$i);
+    }
+  }
+
+  100% {
+    background-color: list.nth($bgcolors, 1); // 변할 요소
+  }
+}
+
+img {
+  display: block;
+}
+
+.fixed {
+  position: fixed;
+  z-index: 2; // wrapper에서 transform을 사용하면 z축으로 나ㅗㅇ게 되기 떄문에 이것을 더 앞으로 가져와준다.
+  @at-root a#{&},
+    & a {
+    // fixed이면서 a인 경우와 그냥 a인 경우 모두 설정한 것 scss고급문법
+
+    color: currentcolor;
+  }
+
+  p {
+    margin-block: 0;
+  }
+
+  &--pos {
+    &-tl {
+      top: var(--fixed-m-y);
+      left: var(--fixed-m-x);
+    }
+
+    &-tr {
+      top: var(--fixed-m-y);
+      right: var(--fixed-m-x);
+    }
+
+    &-br {
+      right: var(--fixed-m-x);
+      bottom: var(--fixed-m-y);
+    }
+
+    &-bl {
+      right: calc(var(--fixed-m-x) + 4rem + 6.25rem);
+      bottom: var(--fixed-m-y);
+      left: var(--fixed-m-x);
+    }
+  }
+
+  &--role {
+    &-logo {
+      height: var(--logo-h);
+      aspect-ratio: 519 / 58;
+      @media (width< $bp-md) {
+        height: var(--logo-h-md);
+      }
+    }
+
+    &-contact {
+      font-weight: 700;
+      text-decoration: none;
+      @media (width< $bp-lg) {
+        display: none;
+      }
+
+      &:hover {
+        text-decoration: underline; // 마우스 올렸을떄, 밑줄 생성
+      }
+    }
+
+    &-list {
+      // 순서를 뒤집는 방법
+      // display: flex;
+      // flex-direction: column-reverse; 도 가능하다.
+      padding-left: 0;
+      margin-block: 0;
+      line-height: 1.8rem;
+      text-transform: capitalize;
+      list-style: none;
+
+      // 아래의 줄을 추가한다.
+      transform: rotate(180deg);
+
+      @media (width< $bp-lg) {
+        display: none;
+      }
+
+      > li {
+        transform: rotate(180deg);
+
+        > a {
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline; // 마우스 올렸을떄, 밑줄 생성
+          }
+        }
+      }
+    }
+
+    &-about {
+      max-width: 30ch; // 글자단위 (ch사용시 폰트 weight을 지정해줘야 한다. )
+      font-weight: 700;
+      text-wrap: balance; // 줄바꿈 예쁘게 해줌(고아 안생김)
+      @media (width< $bp-lg) {
+        display: none;
+      }
+    }
+  }
+
+  &__copyright {
+    font-size: 0.75rem;
+    font-weight: 400;
+
+    > a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__policy {
+    display: block; // a태그이므로 inline이다. inline은 margin적용이 잘 안되므로 block으로 바꿔준다.
+    margin-top: 1lh; // 1 line-hight
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+// #issue {
+//   @for $i from 1 through 7 {
+//     &-#{$i} {
+//       //배열 읽는 느낌 but 1부터 시작
+//       background-color: list.nth($bgcolors, $i);
+//     }
+//   }
+// }
+
+.wrapper {
+  z-index: 1;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.issue {
+  scroll-snap-align: center;
+  display: grid;
+  grid-template-rows: minmax(calc(2 * var(--fixed-m-y) + var(--logo-h)), 1fr) auto 5lh minmax(
+      calc(2 * var(--fixed-m-y)),
+      0.5fr
+    );
+  grid-template-columns: minmax(var(--fixed-m-x), 1fr) minmax(0, 26.25rem) minmax(
+      var(--fixed-m-x),
+      1fr
+    );
+  min-height: 100svh; // svh는 뷰포트 위치에 따르게 한다.최소 크기를 뷰포트에 맞추는 것
+
+  &__img {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: stretch; // 그리드 안에 맞추도록 스스로를 제어해줌
+  }
+
+  &__text {
+    grid-row: 3;
+    grid-column: 2;
+    text-align: center;
+  }
+
+  &__title {
+    margin-block: 0;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+
+  &__link {
+    margin-block: 1lh 0;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.footer {
+  position: relative;
+  display: none;
+  @media (width< $bp-lg) {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: end;
+    justify-content: space-between;
+    padding-inline: var(--fixed-m-x);
+    padding-bottom: var(--fixed-m-y);
+  }
+  @media (width< $bp-sm) {
+    flex-direction: column-reverse;
+    gap: 1lh;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @at-root a#{&},
+    & a {
+    // fixed이면서 a인 경우와 그냥 a인 경우 모두 설정한 것 scss고급문법
+
+    color: currentcolor;
+  }
+
+  &__contact {
+    right: var(--fixed-m-x);
+    bottom: var(--fixed-m-y);
+    font-weight: 700;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline; // 마우스 올렸을떄, 밑줄 생성
+    }
+  }
+
+  &__about {
+    max-width: 30ch; // 글자단위 (ch사용시 폰트 weight을 지정해줘야 한다. )
+    font-weight: 700;
+    text-wrap: balance; // 줄바꿈 예쁘게 해줌(고아 안생김)
+    @media (width< $bp-sm) {
+      max-width: unset;
+      text-align: center;
+    }
+  }
+
+  &__copyright {
+    font-size: 0.75rem;
+    font-weight: 400;
+
+    > a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__policy {
+    display: block; // a태그이므로 inline이다. inline은 margin적용이 잘 안되므로 block으로 바꿔준다.
+    margin-top: 1lh; // 1 line-hight
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

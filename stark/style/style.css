@@ -1,0 +1,119 @@
+@import 'https://fonts.googleapis.com/css2?family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap';
+body {
+  font-family: "Radio Canada Big", sans-serif;
+  color: #10284b;
+}
+
+.middle {
+  padding-inline: 24px;
+}
+.middle__wrapper {
+  display: grid;
+  grid-template-columns: 280px auto;
+  -moz-column-gap: 64px;
+       column-gap: 64px;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+}
+
+.header {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto min-content;
+  grid-column: 1/-1;
+  gap: 8px 48px;
+}
+.header__title {
+  grid-row: 1;
+  grid-column: 1;
+  font-size: 3rem;
+  font-weight: 900;
+}
+.header__description {
+  grid-row: 2;
+  grid-column: 1/-1;
+  font-weight: 1.25rem;
+  line-height: 1.875rem;
+}
+.header__view-all {
+  display: block;
+  grid-row: 1;
+  grid-column: -2;
+  align-self: center;
+  font-family: "Roboto Mono", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #381fd1;
+  text-transform: uppercase;
+  text-wrap: nowrap;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1/-1;
+  grid-auto-rows: 1fr;
+  gap: 32px;
+}
+
+.card {
+  display: grid;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+.card--type-a {
+  gap: 12px;
+  padding: 24px;
+  border: 0.0625rem solid #cbcbcd;
+}
+.card--type-b > * {
+  grid-row: 1;
+  grid-column: 1;
+}
+.card--type-b .card__title {
+  margin: 32px;
+}
+.card--type-b:nth-child(2) {
+  background-color: #f3f2fc;
+}
+.card--type-b:nth-child(3) {
+  background-color: #f6f6eb;
+}
+.card__icon {
+  width: 40px;
+  aspect-ratio: 1/1;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border: 0.0625rem solid #cbcbcd;
+  border-radius: 8px;
+}
+.card__category {
+  overflow-x: hidden;
+  font-family: "Roboto Mono", monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4rem;
+  color: #381fd1;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+}
+.card__title {
+  display: -webkit-box;
+  height: 3lh;
+  overflow: hidden;
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 1.65rem;
+  color: #10284b;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.card__bg {
+  align-self: end;
+}
